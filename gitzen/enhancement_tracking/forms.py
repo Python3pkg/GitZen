@@ -76,7 +76,7 @@ class ChangeAPIAccessDataForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ChangeAPIAccessDataForm, self).__init__(*args, **kwargs)
-        for key, value in self.fields.items():
+        for key, value in list(self.fields.items()):
             self.fields[key].initial = getattr(self.instance, key)
 
 class UserProfileForm(ModelForm):

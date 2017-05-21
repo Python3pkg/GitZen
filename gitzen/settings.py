@@ -205,7 +205,7 @@ DATABASES = {
 # settings_local.py in the same directory as settings.py
 try:
     import settings_local
-    for k, v in settings_local.__dict__.items():
+    for k, v in list(settings_local.__dict__.items()):
         if not k.startswith('__'):
             globals()[k] = v
 except ImportError:

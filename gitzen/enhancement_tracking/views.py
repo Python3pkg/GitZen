@@ -439,7 +439,7 @@ def home(request):
     # Account for the time zone offset and get the enhancement data
     cache_data = cache.get(api_access_data.id)
     enhancement_tables = _time_adjust_enhancement_data(cache_data, utc_offset)
-    context = dict(context.items() + enhancement_tables.items())
+    context = dict(list(context.items()) + list(enhancement_tables.items()))
 
     # Add additional data to be used in the context of the home page
     context['api_requests_successful'] = True

@@ -25,7 +25,7 @@ class BaseEncryptedField(models.Field):
         models.Field.__init__(self, *args, **kwargs)
  
     def _is_encrypted(self, value):
-        return isinstance(value, basestring) and value.startswith(self.prefix)
+        return isinstance(value, str) and value.startswith(self.prefix)
  
     def _get_padding(self, value):
         mod = len(value) % self.cipher.block_size
@@ -49,9 +49,7 @@ class BaseEncryptedField(models.Field):
             value = self.prefix + binascii.b2a_hex(self.cipher.encrypt(value))
         return value 
 
-class EncryptedCharField(BaseEncryptedField):
-    __metaclass__ = models.SubfieldBase
- 
+class EncryptedCharField(BaseEncryptedField, metaclass=models.SubfieldBase):
     def get_internal_type(self):
         return "CharField"
  

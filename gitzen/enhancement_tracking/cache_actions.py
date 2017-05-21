@@ -78,7 +78,7 @@ def build_cache_index(api_access_data):
 
     enhancement_data = build_enhancement_data(zen_tickets, zen_user_reference,
                                               git_tickets, zen_fieldid)
-    cache_data = dict(cache_data.items() + enhancement_data.items())
+    cache_data = dict(list(cache_data.items()) + list(enhancement_data.items()))
 
     # Subtract 10 minutes from the actual time to ensure that no updates are
     # left out if they were made during the time the function was processing.
@@ -407,8 +407,8 @@ def update_cache_index(api_access_data):
                 new_user_reference = get_zen_users(api_access_data,
                                                    new_user_ids)
                 cache_data['zen_user_reference'] = dict(
-                    cache_data['zen_user_reference'].items() + \
-                    new_user_reference.items()
+                    list(cache_data['zen_user_reference'].items()) + \
+                    list(new_user_reference.items())
                 )
 
             # Remove any GitHub tickets with no associations on Zendesk
@@ -422,7 +422,7 @@ def update_cache_index(api_access_data):
                             updated_git_tickets, 'number', ticket['number']
                         )
                 else:
-                    for i in xrange(len(cache_data['git_tickets'])):
+                    for i in range(len(cache_data['git_tickets'])):
                         if cache_data['git_tickets'][i]['number'] == \
                         ticket['number']:
                             cache_data['git_ticket'][i] = ticket
@@ -593,7 +593,7 @@ def _rm_from_diclist(diclist, key_to_check, value_to_check):
     Returns the diclist passed to the function with an entry removed if its
     value of the key_to_check matched the value_to_check.
     """
-    for i in xrange(len(diclist)):
+    for i in range(len(diclist)):
         if diclist[i][key_to_check] == value_to_check:
             diclist.pop(i)
             break
